@@ -1,0 +1,36 @@
+﻿@page
+@model Pages.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div class="text-center">
+    <h1 class="display-4">Havstemperatur</h1>
+    <br/>
+    <h2>Lägga till en ny mätning</h2>
+    <br/>
+    <form method="post">
+        Datum och tid:
+        <input asp-for="Input.DateTime" required>
+        Temperatur (°C):
+        <input asp-for="Input.Temperature" required>
+        <p>@Model.ErrorMessage</p>
+        <input type="submit" asp-page-handler="AddMeasurement" />
+    </form>
+    <br />
+
+    <h2>Alla mätningar</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Temperatur</th>
+            </tr>
+        </thead>
+        @foreach (var p in Model.MeasurementsList)
+        {
+            <tr>
+                <td>@p.DateTime</td>
+                <td>@p.Temperature</td>
+            </tr>
+        }
+    </table>
+</div>
