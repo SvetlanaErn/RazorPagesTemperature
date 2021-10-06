@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System;
+using Serilog;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace APIwithRazorPages.Pages
@@ -18,11 +16,13 @@ namespace APIwithRazorPages.Pages
         public void OnGet()
         {
             MeasurementsList = DataAccess.GetMeasurements().Result;
+            Log.Information("Update page");
         }
 
         public async Task<IActionResult> OnPostAddMeasurementAsync()
         {
             var response = await DataAccess.PostMeasurement(Input);
+            Log.Information("New data: date {date}, temperature {temperature}", Input.DateTime, Input.Temperature);
             return RedirectToPage("Index"); ;
         }
     }
